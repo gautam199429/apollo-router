@@ -1,0 +1,17 @@
+type AccountSummary {
+  accounts: [Account]
+}
+
+type Account {
+  accountReferenceId: String
+  availableCreditAmount: AvailableCreditAmount
+}
+
+type AvailableCreditAmount {
+  availableSpendingCreditAmount: Float
+  availableCashCreditAmount: Float
+}
+
+type Query {
+  accountSummary: AccountSummary
+}

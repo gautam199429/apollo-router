@@ -1,0 +1,7 @@
+name: example-rhai-client-id-validation
+description: A minimal example Rhai script that validates incoming requests
+  containing the apollographql-client-name and apollographql-client-version
+  headers used for metrics collection with GraphOS.
+tags:
+  - Rhai
+  - Router

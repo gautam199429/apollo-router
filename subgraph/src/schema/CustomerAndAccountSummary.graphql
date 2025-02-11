@@ -1,0 +1,26 @@
+# Define the types for the schema
+
+# This type represents the available credit amounts for both spending and cash.
+type AvailableCreditAmount {
+  availableSpendingCreditAmount: Float
+  availableCashCreditAmount: Float
+}
+
+# This type represents an account with its reference ID and available credit amounts.
+type Account {
+  accountReferenceId: String
+  availableCreditAmount: AvailableCreditAmount
+}
+
+# This type represents a customer with their name, age, and associated accounts.
+type Customer {
+  name: String
+  age: Int
+  accounts: [Account]
+}
+
+# Define the root Query type
+type Query {
+  # A query to fetch a customer by their reference ID
+  customerById(customerReferenceId: String!): Customer
+}

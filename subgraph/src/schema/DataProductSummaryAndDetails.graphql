@@ -1,0 +1,22 @@
+# Define the types for the schema
+
+# This type represents the attributes of a data product with entity attributes.
+type EntityAttribute {
+  entityAttribute1: String
+  entityAttribute2: String
+}
+
+# This type represents a data product with a unique identifier and associated attributes.
+type DataProduct {
+  dataProductIdentifier: String
+  attribute3: EntityAttribute
+}
+
+# Define the root Query type
+type Query {
+  # A query to fetch all data products
+  dataProducts: [DataProduct]
+
+  # A query to fetch a specific data product by its identifier
+  dataProduct(dataProductIdentifier: String!): DataProduct
+}
