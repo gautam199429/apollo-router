@@ -12,7 +12,7 @@ const schemaFiles = fs
   .readdirSync(path.resolve("src/schema"))
   .filter((file) => path.extname(file) === ".graphql")
   .map((file) => fs.readFileSync(path.resolve("src/schema", file), "utf-8"));
-``
+
 const mergedTypeDefs = mergeTypeDefs(schemaFiles.map((schema) => parse(schema)));
 
 // Build the schema with the merged type definitions and resolvers
