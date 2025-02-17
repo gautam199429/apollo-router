@@ -1,32 +1,60 @@
 fn process_request(request) {
-  log_info("processing request");
-  let valid_client_names = ["apollo-client", "retail-website"];
-
-  if ("apollographql-client-version" in request.headers && "apollographql-client-name" in request.headers) {
-    let client_header = request.headers["apollographql-client-version"];
-    let name_header = request.headers["apollographql-client-name"];
-  
-    if !valid_client_names.contains(name_header) {
-      log_error("Invalid client name provided");
+  print("Supergraph service: Client request received");
+  if ("client-id" in request.headers) {
+    let client_id = request.headers["client-id"];
+    if client_id == ""{
       throw #{
         status: 401,
-        message: "Invalid client name provided"
+        message: "client-id can not be blank"
       };
     }
-
-    if client_header == "" {
-      log_error("No client version provided");
-      throw #{
-        status: 401,
-        message: "No client version provided"
-      };
+    else{
+      let query = request.body.query;
+      let query_name = process_Query(query);
+      let entitlement_pass = is_bypass(query_name,client_id);
+      if !entitlement_pass{
+        throw #{
+          status: 200,
+          message: "INVALID TYPE"
+        };
+      }
+      else{
+        request.context["ENTITLEMENTS_BYPASS"] = entitlement_pass; 
+      }
     }
   }
-  else {
-    log_error("No client headers set. Please provide headers: apollographql-client-name and apollographql-client-version");
+  else{
     throw #{
       status: 401,
-      message: "No client headers set. Please provide headers: apollographql-client-name and apollographql-client-version"
+      message: "client-Id header is required"
     };
-  }    
+  }
+}
+
+
+fn process_Query(query){
+  let first_middle_bracket_start = query.index_of("{");
+  let second_middle_bracket_start = query.index_of("{", first_middle_bracket_start + 1);
+  let length = second_middle_bracket_start - first_middle_bracket_start;
+  let query_name = query.sub_string(first_middle_bracket_start + 1, length - 1);
+  let small_bracket_start = query_name.index_of("(");
+  if small_bracket_start > 0 {
+      let query_name_bcr = query_name.sub_string(0, small_bracket_start);
+      query_name_bcr.trim();
+      return query_name_bcr;
+  }
+  else{
+      query_name.trim();
+      return query_name;
+  }
+}
+
+fn is_bypass(query_name, client_id) {
+  let bypass_list = #{
+    "customerById_123": true,
+    "dataProducts_123": true,
+    "accounts_123": true
+  };
+  let query_key = `${query_name}_${client_id}`;
+  return bypass_list[query_key] ?? false;
 }
