@@ -26,12 +26,6 @@ type Account
   availableCreditAmount: AvailableCreditAmount
 }
 
-type AccountSummary
-  @join__type(graph: SUBGRAPH)
-{
-  accounts: [Account]
-}
-
 type AvailableCreditAmount
   @join__type(graph: SUBGRAPH)
 {
@@ -84,7 +78,7 @@ enum link__Purpose {
 type Query
   @join__type(graph: SUBGRAPH)
 {
-  accountSummary: AccountSummary
+  accounts: [Account]
   customerById(customerReferenceId: String!): Customer
   dataProducts: [DataProduct]
   dataProduct(dataProductIdentifier: String!): DataProduct
