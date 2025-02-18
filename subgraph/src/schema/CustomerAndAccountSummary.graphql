@@ -15,6 +15,5 @@ type Customer {
 }
 
 type Query {
-  # A query to fetch a customer by their reference ID
   customerById(customerReferenceId: String!): Customer
 }

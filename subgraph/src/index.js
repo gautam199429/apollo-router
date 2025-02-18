@@ -5,7 +5,16 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSubgraphSchema } from "@apollo/subgraph";
 import { parse } from "graphql";
 import { mergeTypeDefs } from "@graphql-tools/merge"; // Import mergeTypeDefs
-import resolvers from "./resolvers.js";
+import customerresolvers from "./customerresolvers.js";
+import accountresolvers from "./accounsresolver.js";
+
+
+const resolvers = {
+  Query: {
+    ...accountresolvers.Query,
+    ...customerresolvers.Query,
+  }
+};
 
 // Load and merge multiple schema files
 const schemaFiles = fs
