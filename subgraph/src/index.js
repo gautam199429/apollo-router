@@ -4,7 +4,7 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSubgraphSchema } from "@apollo/subgraph";
 import { parse } from "graphql";
-import { mergeTypeDefs } from "@graphql-tools/merge"; // Import mergeTypeDefs
+import { mergeTypeDefs } from "@graphql-tools/merge";
 import customerresolvers from "./customerresolvers.js";
 import accountresolvers from "./accounsresolver.js";
 
