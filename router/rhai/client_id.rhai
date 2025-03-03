@@ -12,16 +12,18 @@ fn process_request(request) {
           else{
             let query = request.body.query;
             let blocks = processQueryAndGetName(query);
-            for query in blocks {
-                let isEntitlemnet = is_bypass(query,client_id);
-                if !isEntitlemnet{
-                    throw #{
-                        status: 200,
-                        message: "INVALID TYPE"
-                      };
-                }
+            let bypass_list_ent = #{};
+            for queryName in blocks {
+                let isEntitlemnet = is_bypass(queryName,client_id);
+                bypass_list_ent[queryName] = isEntitlemnet;
             }
-            request.context["ENTITLEMENTS_BYPASS"] = entitlement_pass; 
+            print(bypass_list_ent);
+            request.context["ENTITLEMENTS_BYPASS"] = bypass_list_ent;
+            let error = bypass_list_ent.to_string();
+            throw #{
+                status: 200,
+                message: error
+              };
           }
     }
     else{
@@ -32,7 +34,7 @@ fn process_request(request) {
     }
 }
 
-fn processQueryAndGetName(query){
+fn processQueryAndGetName(input){
     let first_index_of_middle_braket = input.index_of("{");
     let last_index_of_middle_braket = find_brace_positions(input);
     let length = last_index_of_middle_braket - first_index_of_middle_braket;
