@@ -1,3 +1,9 @@
 rhai:
   scripts: rhai
   main: main.rhai
+
+
+telemetry:
+  instrumentation:
+    spans:
+      mode: spec_compliant
