@@ -17,3 +17,4 @@ type Customer {
 type Query {
   customerById(customerReferenceId: String!): Customer
 }
+

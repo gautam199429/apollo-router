@@ -20,3 +20,4 @@ type Query {
   # A query to fetch a specific data product by its identifier
   dataProduct(dataProductIdentifier: String!): DataProduct
 }
+
