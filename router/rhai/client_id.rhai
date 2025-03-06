@@ -20,10 +20,7 @@ fn process_request(request) {
             print(bypass_list_ent);
             request.context["ENTITLEMENTS_BYPASS"] = bypass_list_ent;
             let error = bypass_list_ent.to_string();
-            throw #{
-                status: 200,
-                message: error
-              };
+            request.subgraph.headers["ENTITLEMENTS_BYPASS"] = error;
           }
     }
     else{
