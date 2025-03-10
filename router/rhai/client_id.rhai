@@ -13,14 +13,16 @@ fn process_request(request) {
             let query = request.body.query;
             let blocks = processQueryAndGetName(query);
             let bypass_list_ent = #{};
+            let isEntitlemnetValue = "True";
             for queryName in blocks {
                 let isEntitlemnet = is_bypass(queryName,client_id);
-                bypass_list_ent[queryName] = isEntitlemnet;
+                if !isEntitlemnet {
+                    isEntitlemnetValue = "False";
+                    break;
+                }
             }
-            print(bypass_list_ent);
-            request.context["ENTITLEMENTS_BYPASS"] = bypass_list_ent;
-            let error = bypass_list_ent.to_string();
-            request.subgraph.headers["ENTITLEMENTS_BYPASS"] = error;
+            request.context["ENTITLEMENTS_BYPASS"] = isEntitlemnetValue; 
+            request.subgraph.headers["ENTITLEMENTS_BYPASS"] = isEntitlemnetValue;
           }
     }
     else{

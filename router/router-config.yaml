@@ -5,4 +5,9 @@ telemetry:
   instrumentation:
     spans:
       mode: spec_compliant
-
+headers:
+  all:
+    request:
+      - insert:
+          name: ENTITLEMENTS_BYPASS
+          from_context: ENTITLEMENTS_BYPASS

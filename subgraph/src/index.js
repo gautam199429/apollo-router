@@ -33,19 +33,8 @@ const { url } = await startStandaloneServer(server, {
   listen: { port: 4001 },
   context: async ({ req }) => {
     const entitlementsBypassHeader = req.headers["entitlements_bypass"];
-    let entitlementsBypass = {};
-    if (entitlementsBypassHeader) {
-      try {
-        const cleanedHeader = entitlementsBypassHeader.startsWith("#")
-          ? entitlementsBypassHeader.slice(1)
-          : entitlementsBypassHeader;
-        entitlementsBypass = JSON.parse(cleanedHeader);
-      } catch (error) {
-        console.error("Error parsing entitlements-bypass:", error);
-      }
-    }
-    console.log(entitlementsBypass)
-    return { entitlementsBypass };
+    console.log(entitlementsBypassHeader)
+    return { entitlementsBypassHeader };
   },
 });
 console.log(`🚀 Server ready at: ${url}`);
