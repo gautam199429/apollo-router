@@ -5,9 +5,20 @@ telemetry:
   instrumentation:
     spans:
       mode: spec_compliant
-headers:
-  all:
+# headers:
+#   all:
+#     request:
+#       - insert:
+#           name: ENTITLEMENTS_BYPASS
+#           from_context: "ENTITLEMENTS_BYPASS"
+coprocessor:
+  url: http://127.0.0.1:3000
+  router:
     request:
-      - insert:
-          name: ENTITLEMENTS_BYPASS
-          from_context: ENTITLEMENTS_BYPASS
+      condition:
+        eq:
+          - request_header: ENTITLEMENTS_BYPASS # Header name
+          - "True" # Header value
+      body: true
+      headers: true
+

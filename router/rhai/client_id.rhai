@@ -22,7 +22,7 @@ fn process_request(request) {
                 }
             }
             request.context["ENTITLEMENTS_BYPASS"] = isEntitlemnetValue; 
-            request.subgraph.headers["ENTITLEMENTS_BYPASS"] = isEntitlemnetValue;
+            // request.headers["ENTITLEMENTS_BYPASS"] = isEntitlemnetValue;
           }
     }
     else{
